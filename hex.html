@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кодирование строки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            border: 1px solid #000;
+            padding: 10px;
+            min-height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Кодирование строки</h1>
+    <input type="text" id="inputText" placeholder="Введите строку" />
+    <button id="encodeButton">Кодировать</button>
+    <div id="result"></div>
+    <button id="copyButton">Скопировать в буфер обмена</button>
+
+    <script>
+        // Функция кодирования строки
+        function encodeString(input) {
+            if (!input) return '';
+            let encoded = '';
+            let count = 1;
+
+            for (let i = 0; i < input.length; i++) {
+                if (input[i] === input[i + 1]) {
+                    count++;
+                } else {
+                    encoded += (count > 1 ? count : '') + input[i];
+                    count = 1; // сброс счетчика
+                }
+            }
+            return encoded;
+        }
+
+        // Обработчик для кнопки "Кодировать"
+        document.getElementById('encodeButton').addEventListener('click', function() {
+            const inputText = document.getElementById('inputText').value;
+            const result = encodeString(inputText);
+            document.getElementById('result').innerText = result;
+        });
+
+        // Обработчик для кнопки "Скопировать в буфер обмена"
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const resultText = document.getElementById('result').innerText;
+            navigator.clipboard.writeText(resultText).then(() => {
+                alert('Результат скопирован в буфер обмена!');
+            }).catch(err => {
+                console.error('Ошибка при копировании: ', err);
+            });
+        });
+    </script>
+</body>
+  <
+    /html>
